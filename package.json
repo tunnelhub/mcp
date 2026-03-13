@@ -12,6 +12,7 @@
     }
   },
   "bin": {
+    "mcp": "dist/index.js",
     "tunnelhub-mcp": "dist/index.js"
   },
   "type": "module",

@@ -39,6 +39,7 @@ coverage/
 tmp/
 temp/
 *.tmp
+*.tgz
 
 # Config store (contains sensitive tokens)
 configstore/
