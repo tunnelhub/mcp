@@ -54,6 +54,7 @@ node dist/index.js
 Se esta for sua primeira vez usando o MCP do TunnelHub, siga este fluxo:
 
 1. Faça login no TunnelHub
+   - se for o primeiro login, informe o `accountName` da empresa
 2. Qual sessão está ativa?
 3. Liste os ambientes disponíveis
 4. Liste as automações ativas
@@ -219,6 +220,7 @@ Ferramentas básicas de sessão:
 Você pode pedir coisas como:
 
 - `Faça login no TunnelHub`
+- `Faça login no TunnelHub para a empresa 4success`
 - `Qual sessão está ativa?`
 - `Liste os ambientes disponíveis`
 - `Liste as automações ativas`

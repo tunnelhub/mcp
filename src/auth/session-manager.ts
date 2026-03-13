@@ -1,7 +1,8 @@
 import { BrowserAuthFlow } from './browser-auth.js';
 import { CognitoClient } from './cognito-client.js';
 import { TokenManager } from './token-manager.js';
-import type { AuthContext, Session } from '../types/mcp.js';
+import type { AuthContext, LoginParams, Session } from '../types/mcp.js';
+import type { TenantPublicDetails } from '../types/api.js';
 import { ApiClient } from '../utils/api-client.js';
 import { MCPError } from '../utils/error-handler.js';
 
@@ -18,11 +19,12 @@ export class SessionManager {
     this.apiClient = new ApiClient();
   }
 
-  async createSession(): Promise<Session> {
+  async createSession(params: LoginParams = {}): Promise<Session> {
     const apiHost = this.apiClient.getDefaultApiHost();
     const preferredSession = this.getCurrentSession() || this.getAllSessions()[0] || null;
-    const frontendUrl = preferredSession?.frontendUrl || this.apiClient.getDefaultFrontendUrl();
-    const preferredTenantId = preferredSession?.tenantId;
+    const resolvedTenant = await this.resolveTenantForLogin(params, preferredSession?.tenantId || undefined);
+    const frontendUrl = resolvedTenant ? this.resolveFrontendUrl(resolvedTenant) : preferredSession?.frontendUrl || this.apiClient.getDefaultFrontendUrl();
+    const preferredTenantId = resolvedTenant?.id || preferredSession?.tenantId;
     const browserAuth = new BrowserAuthFlow();
     const tokens = await browserAuth.authenticate(frontendUrl, preferredTenantId);
     const currentUser = await this.apiClient.getCurrentUser(tokens.idToken);
@@ -109,6 +111,56 @@ export class SessionManager {
     }
 
     return this.apiClient.getDefaultFrontendUrl();
+  }
+
+  private async resolveTenantForLogin(params: LoginParams, fallbackTenantId?: string): Promise<TenantPublicDetails | null> {
+    if (params.tenantId || params.accountName) {
+      const tenants = await this.apiClient.searchTenantsPublic(params);
+      return this.pickTenantForLogin(tenants, params);
+    }
+
+    if (fallbackTenantId) {
+      try {
+        return await this.apiClient.getTenantPublic(fallbackTenantId);
+      } catch {
+        return null;
+      }
+    }
+
+    throw new MCPError(
+      'No company provided for first login. Inform accountName first. If not found, retry with tenantId.',
+      'COMPANY_REQUIRED',
+    );
+  }
+
+  private pickTenantForLogin(tenants: TenantPublicDetails[], params: LoginParams): TenantPublicDetails {
+    if (tenants.length === 1) {
+      return tenants[0];
+    }
+
+    if (tenants.length === 0) {
+      if (params.accountName && !params.tenantId) {
+        throw new MCPError(
+          `No company found for accountName "${params.accountName}". Retry with tenantId.`,
+          'COMPANY_NOT_FOUND',
+        );
+      }
+
+      throw new MCPError('No company found for the provided tenantId.', 'COMPANY_NOT_FOUND');
+    }
+
+    const options = tenants.slice(0, 10).map((tenant, index) => ({
+      option: index + 1,
+      tenantId: tenant.id,
+      accountName: tenant.accountName,
+      domain: tenant.domain,
+    }));
+
+    throw new MCPError(
+      `Multiple companies found for accountName "${params.accountName}". Choose one and retry with tenantId.`,
+      'COMPANY_AMBIGUOUS',
+      { options },
+    );
   }
 
   async getCurrentContext(): Promise<AuthContext | null> {

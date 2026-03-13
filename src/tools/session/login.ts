@@ -1,6 +1,7 @@
 import type { ToolContext } from '../../types/mcp.js';
 import { LoginParamsSchema } from '../../types/mcp.js';
 import { errorResult, textResult } from '../../utils/error-handler.js';
+import type { z } from 'zod';
 
 export const loginTool = {
   name: 'login_tunnelhub',
@@ -15,13 +16,13 @@ export const loginTool = {
       openWorldHint: true,
     },
   },
-  handler: async (_params: unknown, context: ToolContext) => {
+  handler: async (params: z.infer<typeof LoginParamsSchema>, context: ToolContext) => {
     try {
-      const session = await context.sessionManager.createSession();
+      const session = await context.sessionManager.createSession(params);
       context.apiClient.setSession(session);
 
       return textResult(
-        `Authenticated successfully.\n\nTenant: ${session.tenantName}\nEnvironment: ${session.environmentName}\nUser: ${session.user.email || session.user.id}`,
+        `Authenticated successfully.\n\nCompany: ${session.tenantName}\nEnvironment: ${session.environmentName}\nUser: ${session.user.email || session.user.id}`,
         session,
       );
     } catch (error) {

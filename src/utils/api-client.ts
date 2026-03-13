@@ -10,7 +10,7 @@ import type {
   Environment,
   TenantPublicDetails,
 } from '../types/api.js';
-import type { Session } from '../types/mcp.js';
+import type { LoginParams, Session } from '../types/mcp.js';
 
 type QueryValue = string | number | boolean | undefined | null;
 
@@ -55,6 +55,18 @@ export class ApiClient {
 
   async getTenantPublic(tenantId: string): Promise<TenantPublicDetails> {
     return this.request<TenantPublicDetails>('GET', `/tenant-service/tenants/public/${tenantId}`, undefined, undefined, false);
+  }
+
+  async searchTenantsPublic(params: LoginParams): Promise<TenantPublicDetails[]> {
+    const query: QueryParams = {};
+
+    if (params.tenantId) {
+      query.accountName = params.tenantId;
+    } else if (params.accountName) {
+      query.accountName = params.accountName;
+    }
+
+    return this.request<TenantPublicDetails[]>('GET', '/tenant-service/tenants/public', query, undefined, false);
   }
 
   async getCurrentUser(idToken: string): Promise<CurrentUser> {

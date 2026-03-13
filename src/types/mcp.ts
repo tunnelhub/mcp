@@ -33,7 +33,7 @@ export interface AuthContext {
 
 export interface ToolContext {
   sessionManager: {
-    createSession: () => Promise<Session>;
+    createSession: (params?: LoginParams) => Promise<Session>;
     switchEnvironment: (environmentId: string) => Promise<Session>;
     getCurrentContext: () => Promise<AuthContext | null>;
     getCurrentSession: () => Session | null;
@@ -46,7 +46,12 @@ export interface ToolContext {
   getSession: () => Promise<Session>;
 }
 
-export const LoginParamsSchema = z.object({}).strict();
+export const LoginParamsSchema = z.object({
+  accountName: z.string().min(1).optional().describe('Company account name to search before login. Example: 4success'),
+  tenantId: z.string().min(1).optional().describe('Tenant UUID to resolve the company directly when account name is not enough.'),
+}).strict();
+
+export type LoginParams = z.infer<typeof LoginParamsSchema>;
 
 export const SwitchEnvironmentParamsSchema = z.object({
   environmentId: z.string().min(1).describe('Target environment UUID'),
