@@ -1,6 +1,6 @@
 {
   "name": "@tunnelhub/mcp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "MCP server for TunnelHub automations and monitoring",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
