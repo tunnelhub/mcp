@@ -16,7 +16,7 @@ The current product emphasis is operational support for TunnelHub automations ra
 
 - transport: `stdio`
 - entrypoint: `dist/index.js`
-- package command: `npx -y -p @tunnelhub/mcp tunnelhub-mcp`
+- package command: `npx -y @tunnelhub/mcp@latest`
 - local command: `node dist/index.js`
 
 The server is intended to run inside MCP clients such as OpenCode, Claude Desktop, Cursor, and other `stdio`-compatible hosts.

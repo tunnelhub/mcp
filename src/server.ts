@@ -1,4 +1,5 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import packageJson from '../package.json' with { type: 'json' };
 import { SessionManager } from './auth/session-manager.js';
 import { registerAutomationTools } from './tools/automations/index.js';
 import { registerMonitoringTools } from './tools/monitoring/index.js';
@@ -18,7 +19,7 @@ export class TunnelHubMCPServer {
   constructor() {
     this.server = new McpServer({
       name: 'tunnelhub-mcp-server',
-      version: '1.0.0',
+      version: packageJson.version,
     });
     this.sessionManager = new SessionManager();
     this.apiClient = new ApiClient();

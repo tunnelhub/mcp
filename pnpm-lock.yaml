@@ -14,15 +14,9 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.0.4
         version: 1.27.1(zod@3.25.76)
-      '@modelfetch/node':
-        specifier: ^0.11.0
-        version: 0.11.0(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))(hono@4.12.7)
       axios:
         specifier: ^1.7.9
         version: 1.13.6
-      chalk:
-        specifier: ^5.3.0
-        version: 5.6.2
       configstore:
         specifier: ^7.0.0
         version: 7.1.0
@@ -39,18 +33,12 @@ importers:
         specifier: ^3.24.1
         version: 3.25.76
     devDependencies:
-      '@types/configstore':
-        specifier: ^6.0.2
-        version: 6.0.2
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.6
       '@types/node':
         specifier: ^22.10.5
         version: 22.19.15
-      '@types/uuid':
-        specifier: ^10.0.0
-        version: 10.0.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.20.0
         version: 8.57.0(@typescript-eslint/parser@8.57.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
@@ -527,12 +515,6 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@hono/mcp@0.1.5':
-    resolution: {integrity: sha512-q6Yurx9VUwVEpqnwVXtzIYaq4kgQgWWq9lYLM7NFS2W0sg1RzL+RdKh6jO4/dGyvBLKrahPd2v+NC6rr0XWBvQ==}
-    peerDependencies:
-      '@modelcontextprotocol/sdk': ^1.12.0
-      hono: '>=4.0.0'
-
   '@hono/node-server@1.19.11':
     resolution: {integrity: sha512-dr8/3zEaB+p0D2n/IUrlPF1HZm586qgJNXK1a9fhg/PzdtkK7Ksd5l312tJX2yBuALqDYBlG20QEbayqPyxn+g==}
     engines: {node: '>=18.14.1'}
@@ -651,12 +633,6 @@ packages:
     peerDependenciesMeta:
       '@cfworker/json-schema':
         optional: true
-
-  '@modelfetch/core@0.11.0':
-    resolution: {integrity: sha512-1f+R52yNzkZxSzmN+D58lEs3iw3Y6wrERq/naA5p0l3W7AdM1wMKRy9BsUZuGJGgV8L0xXwrtXhlCdnqxqYa9A==}
-
-  '@modelfetch/node@0.11.0':
-    resolution: {integrity: sha512-noAUOQhuUQR2L0QwuNLs/G+w3kO8tARBJsOBTeQd1MNd47Ea3OOzyzEKSkQDwoQZEOHCo3jlpq76NFTf2S9wDw==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -866,9 +842,6 @@ packages:
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
 
-  '@types/configstore@6.0.2':
-    resolution: {integrity: sha512-OS//b51j9uyR3zvwD04Kfs5kHpve2qalQ18JhY/ho3voGYUTPLEG90/ocfKPI48hyHH8T04f7KEEbK6Ue60oZQ==}
-
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
@@ -910,9 +883,6 @@ packages:
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
-
-  '@types/uuid@10.0.0':
-    resolution: {integrity: sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==}
 
   '@types/yargs-parser@21.0.3':
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -1160,10 +1130,6 @@ packages:
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
-
-  chalk@5.6.2:
-    resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
-    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   char-regex@1.0.2:
     resolution: {integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==}
@@ -3238,11 +3204,6 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
-  '@hono/mcp@0.1.5(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))(hono@4.12.7)':
-    dependencies:
-      '@modelcontextprotocol/sdk': 1.27.1(zod@3.25.76)
-      hono: 4.12.7
-
   '@hono/node-server@1.19.11(hono@4.12.7)':
     dependencies:
       hono: 4.12.7
@@ -3471,22 +3432,6 @@ snapshots:
       zod-to-json-schema: 3.25.1(zod@3.25.76)
     transitivePeerDependencies:
       - supports-color
-
-  '@modelfetch/core@0.11.0(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))':
-    dependencies:
-      '@hono/mcp': 0.1.5(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))(hono@4.12.7)
-      hono: 4.12.7
-    transitivePeerDependencies:
-      - '@modelcontextprotocol/sdk'
-
-  '@modelfetch/node@0.11.0(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))(hono@4.12.7)':
-    dependencies:
-      '@hono/node-server': 1.19.11(hono@4.12.7)
-      '@modelfetch/core': 0.11.0(@modelcontextprotocol/sdk@1.27.1(zod@3.25.76))
-      type-fest: 4.41.0
-    transitivePeerDependencies:
-      - '@modelcontextprotocol/sdk'
-      - hono
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -3811,8 +3756,6 @@ snapshots:
       '@types/connect': 3.4.38
       '@types/node': 22.19.15
 
-  '@types/configstore@6.0.2': {}
-
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 22.19.15
@@ -3864,8 +3807,6 @@ snapshots:
       '@types/node': 22.19.15
 
   '@types/stack-utils@2.0.3': {}
-
-  '@types/uuid@10.0.0': {}
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -4193,8 +4134,6 @@ snapshots:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-
-  chalk@5.6.2: {}
 
   char-regex@1.0.2: {}
 

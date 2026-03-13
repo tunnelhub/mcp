@@ -45,41 +45,4 @@ export class CognitoClient {
       throw error;
     }
   }
-
-  /**
-   * Initiate password auth (for future use if needed)
-   */
-  async authenticateWithPassword(
-    clientId: string,
-    username: string,
-    password: string
-  ): Promise<BrowserAuthTokens> {
-    const input: InitiateAuthCommandInput = {
-      AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: clientId,
-      AuthParameters: {
-        USERNAME: username,
-        PASSWORD: password,
-      },
-    };
-
-    try {
-      const command = new InitiateAuthCommand(input);
-      const response = await this.client.send(command);
-
-      if (!response.AuthenticationResult) {
-        throw new Error('No authentication result received');
-      }
-
-      return {
-        idToken: response.AuthenticationResult.IdToken!,
-        accessToken: response.AuthenticationResult.AccessToken!,
-        refreshToken: response.AuthenticationResult.RefreshToken!,
-        expiresIn: response.AuthenticationResult.ExpiresIn!,
-      };
-    } catch (error) {
-      console.error('Failed to authenticate:', error);
-      throw error;
-    }
-  }
 }
