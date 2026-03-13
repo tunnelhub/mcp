@@ -4,7 +4,9 @@ import { SessionManager } from './auth/session-manager.js';
 import { registerDataStoreTools } from './tools/data-stores/index.js';
 import { registerAutomationTools } from './tools/automations/index.js';
 import { registerMonitoringTools } from './tools/monitoring/index.js';
+import { registerPackageTools } from './tools/packages/index.js';
 import { registerSessionTools } from './tools/session/index.js';
+import { registerSystemTools } from './tools/systems/index.js';
 import { registerTenantTools } from './tools/tenants/index.js';
 import { ApiClient } from './utils/api-client.js';
 import type { ToolContext } from './types/mcp.js';
@@ -44,6 +46,8 @@ export class TunnelHubMCPServer {
 
     registerSessionTools(this.server, context);
     registerTenantTools(this.server, context);
+    registerPackageTools(this.server, context);
+    registerSystemTools(this.server, context);
     registerDataStoreTools(this.server, context);
     registerAutomationTools(this.server, context);
     registerMonitoringTools(this.server, context);

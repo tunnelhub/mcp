@@ -6,6 +6,8 @@
 
 - session management
 - environments
+- systems
+- packages
 - conversion tables (`dataStores`)
 - automations
 - execution monitoring
@@ -83,6 +85,23 @@ The API client maps tools to public backend services:
 - `/user-service`
 - `/platform-service`
 - `/integrations-service`
+
+### Systems and packages
+
+The MCP exposes read-only access to TunnelHub systems and packages backed by `integrations-service`.
+
+Relevant endpoints:
+
+- `GET /integrations-service/systems`
+- `GET /integrations-service/systems/{id}`
+- `GET /integrations-service/packages`
+- `GET /integrations-service/packages/{id}`
+
+Practical notes:
+
+- systems return masked sensitive fields from backend handlers
+- both listings use Ant Table style filtering and pagination
+- MCP normalizes simple user-facing filters into backend request shape
 
 ### Conversion tables
 
@@ -226,6 +245,16 @@ the text response is intentionally rich because many MCP agents reason better fr
 - `list_tenants_tunnelhub`
 - `get_tenant_tunnelhub`
 
+### Systems
+
+- `list_systems_tunnelhub`
+- `get_system_tunnelhub`
+
+### Packages
+
+- `list_packages_tunnelhub`
+- `get_package_tunnelhub`
+
 ### Conversion Tables
 
 - `list_data_stores_tunnelhub`
@@ -288,6 +317,7 @@ npx -y @tunnelhub/mcp@latest
 ## Known Limitations
 
 - current feature depth is strongest in automations and monitoring
+- systems and packages are read-only for now
 - execution listing still depends on explicit date ranges
 - some backend APIs use Ant Table semantics, so request normalization is required in the MCP layer
 - platform coverage is not complete yet for every TunnelHub domain
@@ -332,6 +362,8 @@ Check:
 - `src/auth/browser-auth.ts`
 - `src/auth/session-manager.ts`
 - `src/tools/session/index.ts`
+- `src/tools/systems/index.ts`
+- `src/tools/packages/index.ts`
 - `src/tools/data-stores/index.ts`
 - `src/tools/automations/index.ts`
 - `src/tools/monitoring/index.ts`

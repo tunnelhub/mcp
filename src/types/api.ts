@@ -67,6 +67,44 @@ export interface DataStoreItem {
   [key: string]: unknown;
 }
 
+export interface GenericParameter {
+  name: string;
+  value: string;
+}
+
+export interface Package {
+  uuid: string;
+  tenantId: string;
+  name: string;
+  description?: string;
+  parameters?: GenericParameter[];
+  createdBy?: string;
+  createdAt?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+}
+
+export type SystemType = 'DATABASE' | 'FTP' | 'LDAP' | 'MAIL' | 'HTTP' | 'SFTP' | 'SAPRFC' | 'SMB' | 'SOAP';
+
+export interface System {
+  uuid: string;
+  tenantId: string;
+  name: string;
+  internalName: string;
+  type: SystemType;
+  description?: string;
+  environment?: string;
+  status?: 'ACTIVE' | 'INACTIVE';
+  parameters?: GenericParameter[] | Record<string, unknown>;
+  logo?: string;
+  createdBy?: string;
+  createdAt?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+}
+
 export interface Automation {
   uuid: string;
   name?: string;

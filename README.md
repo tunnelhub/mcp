@@ -1,6 +1,6 @@
 # TunnelHub MCP
 
-Conecte clientes MCP ao TunnelHub para investigar automações, execuções, logs e traces usando o mesmo fluxo de autenticação do frontend.
+Conecte clientes MCP ao TunnelHub para investigar automações, execuções, logs, traces, sistemas e pacotes usando o mesmo fluxo de autenticação do frontend.
 
 Este MCP é especialmente útil para:
 
@@ -15,6 +15,8 @@ Este MCP é especialmente útil para:
 - Autenticar no TunnelHub pelo navegador
 - Listar ambientes disponíveis
 - Listar e inspecionar automações
+- Consultar sistemas do ambiente atual
+- Consultar pacotes do ambiente atual
 - Consultar tabelas de de/para do ambiente atual
 - Localizar execuções por intervalo de tempo
 - Resumir uma execução completa
@@ -225,6 +227,10 @@ Você pode pedir coisas como:
 - `Qual sessão está ativa?`
 - `Liste os ambientes disponíveis`
 - `Liste as automações ativas`
+- `Liste os sistemas HTTP do ambiente atual`
+- `Mostre o system 1234`
+- `Liste os pacotes do ambiente atual`
+- `Mostre o package abc`
 - `Liste as tabelas de de/para do ambiente atual`
 - `Busque a tabela de de/para CFOP`
 - `Liste os itens da tabela de de/para 1234`
@@ -259,6 +265,16 @@ Você pode pedir coisas como:
 - `get_data_store_tunnelhub`
 - `list_data_store_items_tunnelhub`
 - `get_data_store_item_tunnelhub`
+
+### Sistemas
+
+- `list_systems_tunnelhub`
+- `get_system_tunnelhub`
+
+### Pacotes
+
+- `list_packages_tunnelhub`
+- `get_package_tunnelhub`
 
 ### Automações
 
@@ -301,6 +317,7 @@ Observações:
 ## ⚠️ Limitações atuais
 
 - O foco atual está em automações e monitoramento
+- Sistemas e pacotes estão disponíveis em modo somente leitura
 - Tabelas de de/para estão disponíveis em modo somente leitura
 - Algumas APIs do backend têm comportamentos específicos de filtro e paginação
 - A listagem de execuções depende de intervalo de tempo obrigatório

@@ -71,6 +71,27 @@ export const AutomationListParamsSchema = PaginationParamsSchema.extend({
   status: z.string().optional(),
 }).strict();
 
+export const PackageListParamsSchema = PaginationParamsSchema.extend({
+  name: z.string().optional(),
+  description: z.string().optional(),
+}).strict();
+
+export const PackageIdParamsSchema = z.object({
+  packageId: z.string().min(1),
+}).strict();
+
+export const SystemListParamsSchema = PaginationParamsSchema.extend({
+  name: z.string().optional(),
+  internalName: z.string().optional(),
+  type: z.string().optional(),
+  status: z.string().optional(),
+  environment: z.string().optional(),
+}).strict();
+
+export const SystemIdParamsSchema = z.object({
+  systemId: z.string().min(1),
+}).strict();
+
 export const DataStoreListParamsSchema = PaginationParamsSchema.extend({
   externalCode: z.string().optional().describe('Conversion table code used in automations.'),
   description: z.string().optional(),

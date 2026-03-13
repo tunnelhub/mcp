@@ -10,6 +10,8 @@ import type {
   DataStore,
   DataStoreItem,
   Environment,
+  Package,
+  System,
   TenantPublicDetails,
 } from '../types/api.js';
 import type { LoginParams, Session } from '../types/mcp.js';
@@ -79,6 +81,24 @@ export class ApiClient {
 
   async getEnvironments(session?: Session): Promise<Environment[]> {
     return this.request<Environment[]>('GET', '/platform-service/environments', undefined, undefined, true, session);
+  }
+
+  async listPackages(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildPackageListParams(params);
+    return this.request('GET', '/integrations-service/packages', normalizedParams);
+  }
+
+  async getPackage(packageId: string): Promise<Package> {
+    return this.request<Package>('GET', `/integrations-service/packages/${packageId}`);
+  }
+
+  async listSystems(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildSystemListParams(params);
+    return this.request('GET', '/integrations-service/systems', normalizedParams);
+  }
+
+  async getSystem(systemId: string): Promise<System> {
+    return this.request<System>('GET', `/integrations-service/systems/${systemId}`);
   }
 
   async listDataStores(params?: QueryParams): Promise<unknown> {
@@ -283,6 +303,56 @@ export class ApiClient {
       sorter: { name: 'ascend' },
       filter,
       name: params?.name,
+    };
+  }
+
+  private buildPackageListParams(params?: QueryParams): QueryParams {
+    const filter: Record<string, unknown> = {};
+
+    if (params?.name) {
+      filter.name = [params.name];
+    }
+
+    if (params?.description) {
+      filter.description = [params.description];
+    }
+
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { name: 'ascend' },
+      filter,
+    };
+  }
+
+  private buildSystemListParams(params?: QueryParams): QueryParams {
+    const filter: Record<string, unknown> = {};
+
+    if (params?.name) {
+      filter.name = [params.name];
+    }
+
+    if (params?.internalName) {
+      filter.internalName = [params.internalName];
+    }
+
+    if (params?.type) {
+      filter.type = [params.type];
+    }
+
+    if (params?.status) {
+      filter.status = [params.status];
+    }
+
+    if (params?.environment) {
+      filter.environment = [params.environment];
+    }
+
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { name: 'ascend' },
+      filter,
     };
   }
 
