@@ -62,27 +62,13 @@ Você não precisa decorar o nome das tools. Pode pedir em linguagem natural, e 
 
 ## 🔌 Configuração oficial por cliente
 
-### OpenCode via CLI
+### OpenCode
 
-Depois da publicação, a forma recomendada será:
+A forma mais estável de configurar no OpenCode é via `opencode.json`.
 
-```bash
-opencode mcp add tunnelhub -- npx -y @tunnelhub/mcp@latest
-```
+Se preferir, você também pode usar `opencode mcp add`, que abre um fluxo interativo para adicionar o servidor MCP.
 
-Para desenvolvimento local:
-
-```bash
-opencode mcp add tunnelhub -- node /caminho/para/mcp/dist/index.js
-```
-
-Depois confirme:
-
-```bash
-opencode mcp list
-```
-
-### OpenCode via `opencode.json`
+Exemplo usando `opencode.json`:
 
 Exemplo completo:
 
