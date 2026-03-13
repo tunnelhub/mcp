@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import packageJson from '../package.json' with { type: 'json' };
 import { SessionManager } from './auth/session-manager.js';
+import { registerApiGatewayTools } from './tools/api-gateway/index.js';
 import { registerDataStoreTools } from './tools/data-stores/index.js';
 import { registerAutomationTools } from './tools/automations/index.js';
 import { registerMonitoringTools } from './tools/monitoring/index.js';
@@ -48,6 +49,7 @@ export class TunnelHubMCPServer {
     registerTenantTools(this.server, context);
     registerPackageTools(this.server, context);
     registerSystemTools(this.server, context);
+    registerApiGatewayTools(this.server, context);
     registerDataStoreTools(this.server, context);
     registerAutomationTools(this.server, context);
     registerMonitoringTools(this.server, context);

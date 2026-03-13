@@ -92,6 +92,74 @@ export const SystemIdParamsSchema = z.object({
   systemId: z.string().min(1),
 }).strict();
 
+export const ApiGatewayListParamsSchema = PaginationParamsSchema.extend({
+  id: z.string().optional(),
+  name: z.string().optional(),
+  packageId: z.string().optional(),
+  type: z.string().optional(),
+}).strict();
+
+export const ApiGatewayIdParamsSchema = z.object({
+  apiGatewayId: z.string().min(1),
+}).strict();
+
+export const ApiKeyListParamsSchema = PaginationParamsSchema.extend({
+  id: z.string().optional(),
+  name: z.string().optional(),
+  description: z.string().optional(),
+  enabled: z.boolean().optional(),
+}).strict();
+
+export const UsagePlanListParamsSchema = PaginationParamsSchema.extend({
+  id: z.string().optional(),
+  name: z.string().optional(),
+  description: z.string().optional(),
+}).strict();
+
+export const AuthClientListParamsSchema = PaginationParamsSchema.extend({
+  description: z.string().optional(),
+  clientId: z.string().optional(),
+  status: z.string().optional(),
+}).strict();
+
+export const AuthClientIdParamsSchema = z.object({
+  clientId: z.string().min(1),
+}).strict();
+
+export const AuthResourceServerListParamsSchema = PaginationParamsSchema.extend({
+  Identifier: z.string().optional(),
+  Name: z.string().optional(),
+}).strict();
+
+export const ApiGatewayLogListParamsSchema = PaginationParamsSchema.extend({
+  apiGatewayId: z.string().min(1),
+  uuid: z.string().optional(),
+  status: z.string().optional(),
+  httpMethod: z.string().optional(),
+  resource: z.string().optional(),
+  path: z.string().optional(),
+  sourceIp: z.string().optional(),
+}).strict();
+
+export const ApiGatewayLogIdParamsSchema = z.object({
+  apiGatewayId: z.string().min(1),
+  timestamp: z.string().min(1),
+  logId: z.string().min(1),
+}).strict();
+
+export const ApiGatewayAllLogsParamsSchema = PaginationParamsSchema.extend({
+  startDate: z.string().min(1).describe('Start date/time. Example: 2026-03-13 or 2026-03-13 00:00:00'),
+  endDate: z.string().min(1).describe('End date/time. Example: 2026-03-13 or 2026-03-13 23:59:59'),
+  uuid: z.string().optional(),
+  packageId: z.string().optional(),
+  apiKey: z.string().optional(),
+  client: z.string().optional(),
+  apiId: z.string().optional(),
+  httpMethod: z.string().optional(),
+  resource: z.string().optional(),
+  status: z.string().optional(),
+}).strict();
+
 export const DataStoreListParamsSchema = PaginationParamsSchema.extend({
   externalCode: z.string().optional().describe('Conversion table code used in automations.'),
   description: z.string().optional(),

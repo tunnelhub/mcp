@@ -1,6 +1,6 @@
 # TunnelHub MCP
 
-Conecte clientes MCP ao TunnelHub para investigar automações, execuções, logs, traces, sistemas e pacotes usando o mesmo fluxo de autenticação do frontend.
+Conecte clientes MCP ao TunnelHub para investigar automações, execuções, logs, traces, API Gateway, sistemas e pacotes usando o mesmo fluxo de autenticação do frontend.
 
 Este MCP é especialmente útil para:
 
@@ -18,6 +18,7 @@ Este MCP é especialmente útil para:
 - Consultar sistemas do ambiente atual
 - Consultar pacotes do ambiente atual
 - Consultar tabelas de de/para do ambiente atual
+- Consultar APIs, clients, usage plans, API keys e logs do API Gateway
 - Localizar execuções por intervalo de tempo
 - Resumir uma execução completa
 - Consultar logs e traces de uma execução
@@ -231,6 +232,15 @@ Você pode pedir coisas como:
 - `Mostre o system 1234`
 - `Liste os pacotes do ambiente atual`
 - `Mostre o package abc`
+- `Liste as APIs do API Gateway`
+- `Mostre a API 123abc`
+- `Liste os clients de autenticacao`
+- `Mostre o client xyz`
+- `Liste os usage plans`
+- `Liste as API keys`
+- `Liste os logs da API 123abc`
+- `Mostre o log 9988 da API 123abc no timestamp 1710345600`
+- `Liste os logs globais do API Gateway no dia 2026-03-13`
 - `Liste as tabelas de de/para do ambiente atual`
 - `Busque a tabela de de/para CFOP`
 - `Liste os itens da tabela de de/para 1234`
@@ -265,6 +275,19 @@ Você pode pedir coisas como:
 - `get_data_store_tunnelhub`
 - `list_data_store_items_tunnelhub`
 - `get_data_store_item_tunnelhub`
+
+### API Gateway
+
+- `list_api_gateways_tunnelhub`
+- `get_api_gateway_tunnelhub`
+- `list_api_keys_tunnelhub`
+- `list_usage_plans_tunnelhub`
+- `list_auth_clients_tunnelhub`
+- `get_auth_client_tunnelhub`
+- `list_auth_resource_servers_tunnelhub`
+- `list_api_gateway_logs_tunnelhub`
+- `get_api_gateway_log_tunnelhub`
+- `list_all_api_gateway_logs_tunnelhub`
 
 ### Sistemas
 
@@ -317,8 +340,10 @@ Observações:
 ## ⚠️ Limitações atuais
 
 - O foco atual está em automações e monitoramento
+- API Gateway está disponível em modo somente leitura
 - Sistemas e pacotes estão disponíveis em modo somente leitura
 - Tabelas de de/para estão disponíveis em modo somente leitura
+- API keys e logs podem incluir dados sensíveis retornados pelo backend
 - Algumas APIs do backend têm comportamentos específicos de filtro e paginação
 - A listagem de execuções depende de intervalo de tempo obrigatório
 

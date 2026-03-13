@@ -1,11 +1,14 @@
 import axios, { type AxiosInstance } from 'axios';
 import type {
+  ApiGateway,
+  ApiGatewayLog,
   Automation,
   AutomationDeploy,
   AutomationExecution,
   AutomationExecutionDetailsResponse,
   AutomationExecutionLogsResponse,
   AutomationTraceResponse,
+  AuthClient,
   CurrentUser,
   DataStore,
   DataStoreItem,
@@ -28,6 +31,21 @@ interface ExecutionDateRangeParams {
   automationId?: string;
   status?: string;
   hideEmptySuccess?: boolean;
+}
+
+interface ApiGatewayLogDateRangeParams {
+  startDate: string;
+  endDate: string;
+  current?: number;
+  pageSize?: number;
+  uuid?: string;
+  packageId?: string;
+  apiKey?: string;
+  client?: string;
+  apiId?: string;
+  httpMethod?: string;
+  resource?: string;
+  status?: string;
 }
 
 export class ApiClient {
@@ -125,6 +143,53 @@ export class ApiClient {
 
   async getTenant(tenantId: string): Promise<unknown> {
     return this.request('GET', `/tenant-service/tenants/${tenantId}`);
+  }
+
+  async listApiGateways(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildApiGatewayListParams(params);
+    return this.request('GET', '/api-gateway-service/apiGateways', normalizedParams);
+  }
+
+  async getApiGateway(apiGatewayId: string): Promise<ApiGateway> {
+    return this.request<ApiGateway>('GET', `/api-gateway-service/apiGateways/${apiGatewayId}`);
+  }
+
+  async listApiKeys(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildApiKeyListParams(params);
+    return this.request('GET', '/api-gateway-service/apiKeys', normalizedParams);
+  }
+
+  async listUsagePlans(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildUsagePlanListParams(params);
+    return this.request('GET', '/api-gateway-service/usagePlans', normalizedParams);
+  }
+
+  async listAuthClients(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildAuthClientListParams(params);
+    return this.request('GET', '/api-gateway-service/authentication/clients', normalizedParams);
+  }
+
+  async getAuthClient(clientId: string): Promise<AuthClient> {
+    return this.request<AuthClient>('GET', `/api-gateway-service/authentication/clients/${clientId}`);
+  }
+
+  async listAuthResourceServers(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildAuthResourceServerListParams(params);
+    return this.request('GET', '/api-gateway-service/authentication/resourceServers', normalizedParams);
+  }
+
+  async listApiGatewayLogs(apiGatewayId: string, params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildApiGatewayLogListParams(params);
+    return this.request('GET', `/api-gateway-service/apiGateways/${apiGatewayId}/logs`, normalizedParams);
+  }
+
+  async getApiGatewayLog(apiGatewayId: string, timestamp: string, logId: string): Promise<ApiGatewayLog> {
+    return this.request<ApiGatewayLog>('GET', `/api-gateway-service/apiGateways/${apiGatewayId}/logs/${timestamp}/${logId}`);
+  }
+
+  async listAllApiGatewayLogs(params: ApiGatewayLogDateRangeParams): Promise<unknown> {
+    const normalizedParams = this.buildApiGatewayLogRangeParams(params);
+    return this.request('GET', '/api-gateway-service/apiGateways/all/logs', normalizedParams, this.getMonitoringHeaders());
   }
 
   async listAutomations(params?: QueryParams): Promise<unknown> {
@@ -353,6 +418,102 @@ export class ApiClient {
       pageSize: Number(params?.pageSize || 20),
       sorter: { name: 'ascend' },
       filter,
+    };
+  }
+
+  private buildApiGatewayListParams(params?: QueryParams): QueryParams {
+    const filter: Record<string, unknown> = {};
+
+    if (params?.type) {
+      filter.type = [params.type];
+    }
+
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { name: 'ascend' },
+      filter,
+      id: params?.id,
+      name: params?.name,
+      packageId: params?.packageId,
+    };
+  }
+
+  private buildApiKeyListParams(params?: QueryParams): QueryParams {
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { name: 'ascend' },
+      id: params?.id,
+      name: params?.name,
+      description: params?.description,
+      enabled: typeof params?.enabled === 'boolean' ? String(params.enabled) : params?.enabled,
+    };
+  }
+
+  private buildUsagePlanListParams(params?: QueryParams): QueryParams {
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { name: 'ascend' },
+      id: params?.id,
+      name: params?.name,
+      description: params?.description,
+    };
+  }
+
+  private buildAuthClientListParams(params?: QueryParams): QueryParams {
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { description: 'ascend' },
+      description: params?.description,
+      clientId: params?.clientId,
+      status: params?.status,
+    };
+  }
+
+  private buildAuthResourceServerListParams(params?: QueryParams): QueryParams {
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { Identifier: 'ascend' },
+      Identifier: params?.Identifier,
+      Name: params?.Name,
+    };
+  }
+
+  private buildApiGatewayLogListParams(params?: QueryParams): QueryParams {
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { createdAt: 'descending' },
+      uuid: params?.uuid,
+      status: params?.status,
+      httpMethod: params?.httpMethod,
+      resource: params?.resource,
+      path: params?.path,
+      sourceIp: params?.sourceIp,
+    };
+  }
+
+  private buildApiGatewayLogRangeParams(params: ApiGatewayLogDateRangeParams): QueryParams {
+    return {
+      current: params.current || 1,
+      pageSize: params.pageSize || 20,
+      createdAt: JSON.stringify([
+        this.normalizeDateBoundary(params.startDate, 'start'),
+        this.normalizeDateBoundary(params.endDate, 'end'),
+      ]),
+      sorter: { createdAt: 'descending' },
+      uuid: params.uuid,
+      packageId: params.packageId,
+      apiKey: params.apiKey,
+      client: params.client,
+      apiId: params.apiId,
+      httpMethod: params.httpMethod,
+      resource: params.resource,
+      status: params.status,
     };
   }
 

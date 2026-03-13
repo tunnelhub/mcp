@@ -105,6 +105,129 @@ export interface System {
   [key: string]: unknown;
 }
 
+export type ApiGatewayType = 'REST' | 'HTTP' | 'WEBSOCKET';
+
+export type ApiLogStatus = 'SUCCESS' | 'FAIL';
+
+export interface ApiGatewayStage {
+  stageName?: string;
+  [key: string]: unknown;
+}
+
+export interface UsagePlanKey {
+  id?: string;
+  name?: string;
+  type?: string;
+  value?: string;
+  [key: string]: unknown;
+}
+
+export interface ApiGatewayUsagePlanBinding {
+  stage: string;
+  usagePlan: string;
+  keys?: UsagePlanKey[];
+}
+
+export interface ApiGateway {
+  id: string;
+  tenantId: string;
+  name: string;
+  description?: string;
+  type: ApiGatewayType;
+  stages?: ApiGatewayStage[];
+  usagePlans?: ApiGatewayUsagePlanBinding[];
+  environmentId: string;
+  packageId: string;
+  policyArn?: string;
+  repositoryUrl?: string;
+  createdAt?: string;
+  createdBy?: string;
+  updatedAt?: string;
+  updatedBy?: string;
+  [key: string]: unknown;
+}
+
+export interface ApiKey {
+  id?: string;
+  name?: string;
+  description?: string;
+  value?: string;
+  enabled?: boolean;
+  tags?: Record<string, string>;
+  createdDate?: string;
+  lastUpdatedDate?: string;
+  [key: string]: unknown;
+}
+
+export interface UsagePlanThrottleSettings {
+  burstLimit?: number;
+  rateLimit?: number;
+}
+
+export interface UsagePlanQuotaSettings {
+  limit?: number;
+  offset?: number;
+  period?: string;
+}
+
+export interface UsagePlan {
+  id?: string;
+  name?: string;
+  description?: string;
+  apiStages?: Array<Record<string, unknown>>;
+  throttle?: UsagePlanThrottleSettings;
+  quota?: UsagePlanQuotaSettings;
+  apiKeys?: UsagePlanKey[];
+  tags?: Record<string, string>;
+  [key: string]: unknown;
+}
+
+export type AuthClientStatus = 'active' | 'revoked';
+
+export interface AuthClient {
+  clientId: string;
+  description?: string;
+  createdAt?: string;
+  status?: AuthClientStatus;
+  allowedScopes?: string[];
+  idTokenValidity?: number;
+  accessTokenValidity?: number;
+  refreshTokenValidity?: number;
+  issueRefreshToken?: boolean;
+  [key: string]: unknown;
+}
+
+export interface AuthResourceServer {
+  Identifier?: string;
+  Name?: string;
+  Scopes?: Array<Record<string, unknown>>;
+  [key: string]: unknown;
+}
+
+export interface ApiGatewayLog {
+  uuid: string;
+  tenantId?: string;
+  apiId: string;
+  packageId?: string;
+  environmentId?: string;
+  status?: ApiLogStatus;
+  expirationPeriod?: number;
+  path?: string;
+  resource?: string;
+  sourceIp?: string;
+  httpMethod?: string;
+  rawRequest?: Record<string, unknown>;
+  requestPayload?: string;
+  requestHeaders?: Record<string, string | undefined>;
+  rawResponse?: Record<string, unknown>;
+  responsePayload?: string;
+  responseHeaders?: Record<string, string | boolean | number | undefined>;
+  createdAt?: string;
+  startTime?: string;
+  endTime?: string;
+  [key: string]: unknown;
+}
+
 export interface Automation {
   uuid: string;
   name?: string;

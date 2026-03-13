@@ -6,6 +6,7 @@
 
 - session management
 - environments
+- API Gateway
 - systems
 - packages
 - conversion tables (`dataStores`)
@@ -85,6 +86,31 @@ The API client maps tools to public backend services:
 - `/user-service`
 - `/platform-service`
 - `/integrations-service`
+- `/api-gateway-service`
+
+### API Gateway
+
+The MCP exposes read-only access to API Gateway resources backed by `api-gateway-service`.
+
+Relevant endpoints:
+
+- `GET /api-gateway-service/apiGateways`
+- `GET /api-gateway-service/apiGateways/{id}`
+- `GET /api-gateway-service/apiKeys`
+- `GET /api-gateway-service/usagePlans`
+- `GET /api-gateway-service/authentication/clients`
+- `GET /api-gateway-service/authentication/clients/{clientId}`
+- `GET /api-gateway-service/authentication/resourceServers`
+- `GET /api-gateway-service/apiGateways/{id}/logs`
+- `GET /api-gateway-service/apiGateways/{id}/logs/{timestamp}/{logId}`
+- `GET /api-gateway-service/apiGateways/all/logs`
+
+Practical notes:
+
+- API key listing may include the actual key value because the backend requests `includeValues: true`
+- global API log listing is range-based and requires `startDate` and `endDate`
+- log detail decoding uses the same `lz-string` UTF-16 decompression flow used by the frontend detail page
+- list tools keep raw payloads compressed to avoid heavy responses; detail tools decode request and response payloads
 
 ### Systems and packages
 
@@ -255,6 +281,19 @@ the text response is intentionally rich because many MCP agents reason better fr
 - `list_packages_tunnelhub`
 - `get_package_tunnelhub`
 
+### API Gateway
+
+- `list_api_gateways_tunnelhub`
+- `get_api_gateway_tunnelhub`
+- `list_api_keys_tunnelhub`
+- `list_usage_plans_tunnelhub`
+- `list_auth_clients_tunnelhub`
+- `get_auth_client_tunnelhub`
+- `list_auth_resource_servers_tunnelhub`
+- `list_api_gateway_logs_tunnelhub`
+- `get_api_gateway_log_tunnelhub`
+- `list_all_api_gateway_logs_tunnelhub`
+
 ### Conversion Tables
 
 - `list_data_stores_tunnelhub`
@@ -317,6 +356,8 @@ npx -y @tunnelhub/mcp@latest
 ## Known Limitations
 
 - current feature depth is strongest in automations and monitoring
+- API Gateway access is read-only for now
+- API key and log responses may contain sensitive backend data
 - systems and packages are read-only for now
 - execution listing still depends on explicit date ranges
 - some backend APIs use Ant Table semantics, so request normalization is required in the MCP layer
@@ -362,6 +403,7 @@ Check:
 - `src/auth/browser-auth.ts`
 - `src/auth/session-manager.ts`
 - `src/tools/session/index.ts`
+- `src/tools/api-gateway/index.ts`
 - `src/tools/systems/index.ts`
 - `src/tools/packages/index.ts`
 - `src/tools/data-stores/index.ts`
