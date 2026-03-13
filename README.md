@@ -20,6 +20,21 @@ Este MCP é especialmente útil para:
 - Consultar logs e traces de uma execução
 - Ler informações básicas da empresa atual
 
+## ✅ Pré-requisitos
+
+Você vai precisar de:
+
+- Node.js 22+
+- Acesso a uma empresa do TunnelHub
+- Um cliente compatível com MCP via `stdio`
+
+Clientes recomendados:
+
+- OpenCode
+- Claude Desktop
+- Cursor
+- Outros clientes MCP compatíveis com `stdio`
+
 ## 🚀 Comece em 2 minutos
 
 A forma principal de uso é via `npx`:
@@ -36,34 +51,14 @@ pnpm build
 node dist/index.js
 ```
 
-## ✅ Pré-requisitos
+Se esta for sua primeira vez usando o MCP do TunnelHub, siga este fluxo:
 
-Você vai precisar de:
+1. Faça login no TunnelHub
+2. Qual sessão está ativa?
+3. Liste os ambientes disponíveis
+4. Liste as automações ativas
 
-- Node.js 22+
-- Acesso a uma empresa do TunnelHub
-- Um cliente compatível com MCP via `stdio`
-
-Clientes recomendados:
-
-- OpenCode
-- Claude Desktop
-- Cursor
-- Outros clientes MCP compatíveis com `stdio`
-
-## ⚙️ Variáveis de ambiente
-
-Variáveis suportadas:
-
-- `OAUTH_CALLBACK_PORT` padrão `3333`
-- `TUNNELHUB_FRONTEND_URL` opcional
-- `TUNNELHUB_API_HOST` opcional; padrão `https://api.tunnelhub.io`
-
-Observações:
-
-- O login usa o fluxo do frontend do TunnelHub
-- Quando possível, o MCP reutiliza o domínio personalizado da empresa
-- A porta do callback OAuth prefere `3333` e procura outra livre se necessário
+Você não precisa decorar o nome das tools. Pode pedir em linguagem natural, e o cliente MCP deve escolher a ferramenta certa.
 
 ## 🔌 Configuração oficial por cliente
 
@@ -232,17 +227,6 @@ Ferramentas básicas de sessão:
 - `switch_environment_tunnelhub`
 - `logout_tunnelhub`
 
-## 👋 Primeiros passos
-
-Se esta for sua primeira vez usando o MCP do TunnelHub, comece por aqui:
-
-1. Faça login no TunnelHub
-2. Qual sessão está ativa?
-3. Liste os ambientes disponíveis
-4. Liste as automações ativas
-
-Você não precisa decorar o nome das tools. Pode pedir em linguagem natural, e o cliente MCP deve escolher a ferramenta certa.
-
 ## 💬 Exemplos de perguntas
 
 Você pode pedir coisas como:
@@ -291,6 +275,20 @@ Você pode pedir coisas como:
 - `summarize_execution_tunnelhub`
 - `get_execution_traces_tunnelhub`
 - `get_execution_logs_tunnelhub`
+
+## ⚙️ Variáveis de ambiente
+
+Variáveis suportadas:
+
+- `OAUTH_CALLBACK_PORT` padrão `3333`
+- `TUNNELHUB_FRONTEND_URL` opcional
+- `TUNNELHUB_API_HOST` opcional; padrão `https://api.tunnelhub.io`
+
+Observações:
+
+- O login usa o fluxo do frontend do TunnelHub
+- Quando possível, o MCP reutiliza o domínio personalizado da empresa
+- A porta do callback OAuth prefere `3333` e procura outra livre se necessário
 
 ## 🧭 Dicas de uso
 
