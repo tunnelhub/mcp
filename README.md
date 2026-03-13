@@ -15,6 +15,7 @@ Este MCP é especialmente útil para:
 - Autenticar no TunnelHub pelo navegador
 - Listar ambientes disponíveis
 - Listar e inspecionar automações
+- Consultar tabelas de de/para do ambiente atual
 - Localizar execuções por intervalo de tempo
 - Resumir uma execução completa
 - Consultar logs e traces de uma execução
@@ -224,6 +225,10 @@ Você pode pedir coisas como:
 - `Qual sessão está ativa?`
 - `Liste os ambientes disponíveis`
 - `Liste as automações ativas`
+- `Liste as tabelas de de/para do ambiente atual`
+- `Busque a tabela de de/para CFOP`
+- `Liste os itens da tabela de de/para 1234`
+- `Me mostre o item abc da tabela de de/para 1234`
 - `Ache a execução 9b696080439f no dia 2026-03-13`
 - `Resuma a execução 019ce7f3-2707-740c-8692-9b696080439f`
 - `Me mostre os traces com ERROR dessa execução`
@@ -247,6 +252,13 @@ Você pode pedir coisas como:
 
 - `list_tenants_tunnelhub`
 - `get_tenant_tunnelhub`
+
+### Tabelas de de/para
+
+- `list_data_stores_tunnelhub`
+- `get_data_store_tunnelhub`
+- `list_data_store_items_tunnelhub`
+- `get_data_store_item_tunnelhub`
 
 ### Automações
 
@@ -289,6 +301,7 @@ Observações:
 ## ⚠️ Limitações atuais
 
 - O foco atual está em automações e monitoramento
+- Tabelas de de/para estão disponíveis em modo somente leitura
 - Algumas APIs do backend têm comportamentos específicos de filtro e paginação
 - A listagem de execuções depende de intervalo de tempo obrigatório
 

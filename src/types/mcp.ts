@@ -71,9 +71,30 @@ export const AutomationListParamsSchema = PaginationParamsSchema.extend({
   status: z.string().optional(),
 }).strict();
 
+export const DataStoreListParamsSchema = PaginationParamsSchema.extend({
+  externalCode: z.string().optional().describe('Conversion table code used in automations.'),
+  description: z.string().optional(),
+  packageId: z.string().optional(),
+}).strict();
+
+export const DataStoreIdParamsSchema = z.object({
+  dataStoreId: z.string().min(1),
+}).strict();
+
+export const DataStoreItemListParamsSchema = DataStoreIdParamsSchema.extend({
+  current: z.number().int().positive().optional(),
+  pageSize: z.number().int().positive().max(100).optional(),
+  fromValue: z.string().optional(),
+  toValue: z.string().optional(),
+}).strict();
+
+export const DataStoreItemIdParamsSchema = DataStoreIdParamsSchema.extend({
+  itemId: z.string().min(1),
+}).strict();
+
 export const AutomationIdParamsSchema = z.object({
   automationId: z.string().min(1),
-});
+}).strict();
 
 export const ExecuteAutomationParamsSchema = AutomationIdParamsSchema.extend({
   payload: z.union([z.string(), z.record(z.string(), z.unknown())]).optional(),

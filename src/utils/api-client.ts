@@ -7,6 +7,8 @@ import type {
   AutomationExecutionLogsResponse,
   AutomationTraceResponse,
   CurrentUser,
+  DataStore,
+  DataStoreItem,
   Environment,
   TenantPublicDetails,
 } from '../types/api.js';
@@ -77,6 +79,24 @@ export class ApiClient {
 
   async getEnvironments(session?: Session): Promise<Environment[]> {
     return this.request<Environment[]>('GET', '/platform-service/environments', undefined, undefined, true, session);
+  }
+
+  async listDataStores(params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildDataStoreListParams(params);
+    return this.request('GET', '/platform-service/dataStores', normalizedParams);
+  }
+
+  async getDataStore(dataStoreId: string): Promise<DataStore> {
+    return this.request<DataStore>('GET', `/platform-service/dataStores/${dataStoreId}`);
+  }
+
+  async listDataStoreItems(dataStoreId: string, params?: QueryParams): Promise<unknown> {
+    const normalizedParams = this.buildDataStoreItemListParams(params);
+    return this.request('GET', `/platform-service/dataStores/${dataStoreId}/items`, normalizedParams);
+  }
+
+  async getDataStoreItem(dataStoreId: string, itemId: string): Promise<DataStoreItem> {
+    return this.request<DataStoreItem>('GET', `/platform-service/dataStores/${dataStoreId}/items/${itemId}`);
   }
 
   async listTenants(params?: QueryParams): Promise<unknown> {
@@ -286,6 +306,48 @@ export class ApiClient {
       ]),
       hideEmptySuccess: params.hideEmptySuccess ?? true,
       sorter: { createdAt: 'descending' },
+      filter,
+    };
+  }
+
+  private buildDataStoreListParams(params?: QueryParams): QueryParams {
+    const filter: Record<string, unknown> = {};
+
+    if (params?.externalCode) {
+      filter.externalCode = [params.externalCode];
+    }
+
+    if (params?.description) {
+      filter.description = [params.description];
+    }
+
+    if (params?.packageId) {
+      filter.packageId = [params.packageId];
+    }
+
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { externalCode: 'ascend' },
+      filter,
+    };
+  }
+
+  private buildDataStoreItemListParams(params?: QueryParams): QueryParams {
+    const filter: Record<string, unknown> = {};
+
+    if (params?.fromValue) {
+      filter.fromValue = [params.fromValue];
+    }
+
+    if (params?.toValue) {
+      filter.toValue = [params.toValue];
+    }
+
+    return {
+      current: Number(params?.current || 1),
+      pageSize: Number(params?.pageSize || 20),
+      sorter: { fromValue: 'ascend' },
       filter,
     };
   }

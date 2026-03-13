@@ -40,6 +40,33 @@ export interface CurrentUser {
   identityPoolId?: string;
 }
 
+export interface DataStore {
+  uuid: string;
+  tenantId: string;
+  packageId?: string;
+  externalCode: string;
+  description?: string;
+  limitedUsers?: string[];
+  createdBy?: string;
+  createdAt?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+}
+
+export interface DataStoreItem {
+  uuid: string;
+  tenantId?: string;
+  dataStoreId: string;
+  fromValue: string;
+  toValue: string;
+  createdBy?: string;
+  createdAt?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+}
+
 export interface Automation {
   uuid: string;
   name?: string;

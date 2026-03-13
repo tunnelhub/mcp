@@ -6,6 +6,7 @@
 
 - session management
 - environments
+- conversion tables (`dataStores`)
 - automations
 - execution monitoring
 - logs and traces
@@ -82,6 +83,22 @@ The API client maps tools to public backend services:
 - `/user-service`
 - `/platform-service`
 - `/integrations-service`
+
+### Conversion tables
+
+The MCP exposes read-only access to TunnelHub conversion tables backed by `platform-service` data stores.
+
+Relevant endpoints:
+
+- `GET /platform-service/dataStores`
+- `GET /platform-service/dataStores/{id}`
+- `GET /platform-service/dataStores/{id}/items`
+- `GET /platform-service/dataStores/{id}/items/{itemId}`
+
+Practical mapping:
+
+- data store = conversion table header (`externalCode`, `description`, `packageId`)
+- data store item = de/para row (`fromValue`, `toValue`)
 
 Relevant file:
 
@@ -209,6 +226,13 @@ the text response is intentionally rich because many MCP agents reason better fr
 - `list_tenants_tunnelhub`
 - `get_tenant_tunnelhub`
 
+### Conversion Tables
+
+- `list_data_stores_tunnelhub`
+- `get_data_store_tunnelhub`
+- `list_data_store_items_tunnelhub`
+- `get_data_store_item_tunnelhub`
+
 ### Automations
 
 - `list_automations_tunnelhub`
@@ -258,7 +282,7 @@ For `npx` usage, the package now exposes:
 Expected invocation from clients is still:
 
 ```bash
-npx -y -p @tunnelhub/mcp tunnelhub-mcp
+npx -y @tunnelhub/mcp@latest
 ```
 
 ## Known Limitations
@@ -308,5 +332,6 @@ Check:
 - `src/auth/browser-auth.ts`
 - `src/auth/session-manager.ts`
 - `src/tools/session/index.ts`
+- `src/tools/data-stores/index.ts`
 - `src/tools/automations/index.ts`
 - `src/tools/monitoring/index.ts`
