@@ -37,10 +37,10 @@ Clientes recomendados:
 
 ## 🚀 Comece em 2 minutos
 
-A forma principal de uso é via `npx`:
+A forma principal de uso é via `npx` com o bin explícito:
 
 ```bash
-npx @tunnelhub/mcp
+npx -y @tunnelhub/mcp@latest
 ```
 
 Se você estiver desenvolvendo localmente:
@@ -67,7 +67,7 @@ Você não precisa decorar o nome das tools. Pode pedir em linguagem natural, e 
 Depois da publicação, a forma recomendada será:
 
 ```bash
-opencode mcp add tunnelhub -- npx @tunnelhub/mcp
+opencode mcp add tunnelhub -- npx -y @tunnelhub/mcp@latest
 ```
 
 Para desenvolvimento local:
@@ -93,7 +93,8 @@ Exemplo completo:
       "type": "local",
       "command": [
         "npx",
-        "@tunnelhub/mcp"
+        "-y",
+        "@tunnelhub/mcp@latest"
       ],
       "enabled": true,
       "environment": {
@@ -133,7 +134,7 @@ Exemplo de configuração no `claude_desktop_config.json`:
   "mcpServers": {
     "tunnelhub": {
       "command": "npx",
-      "args": ["@tunnelhub/mcp"],
+      "args": ["-y", "@tunnelhub/mcp@latest"],
       "env": {
         "OAUTH_CALLBACK_PORT": "3333"
       }
@@ -167,7 +168,7 @@ Use o mesmo comando `stdio` do cliente MCP:
   "mcpServers": {
     "tunnelhub": {
       "command": "npx",
-      "args": ["@tunnelhub/mcp"],
+      "args": ["-y", "@tunnelhub/mcp@latest"],
       "env": {
         "OAUTH_CALLBACK_PORT": "3333"
       }
@@ -197,7 +198,7 @@ Exemplo usando build local:
 Se o cliente aceitar um comando local, use:
 
 ```bash
-npx @tunnelhub/mcp
+npx -y @tunnelhub/mcp@latest
 ```
 
 Ou, em desenvolvimento:
