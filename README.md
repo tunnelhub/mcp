@@ -1,0 +1,322 @@
+# TunnelHub MCP
+
+Conecte clientes MCP ao TunnelHub para investigar automações, execuções, logs e traces usando o mesmo fluxo de autenticação do frontend.
+
+Este MCP é especialmente útil para:
+
+- Acompanhar automações do TunnelHub
+- Localizar e resumir execuções
+- Imprimir logs e traces
+- Analisar falhas parciais e dependências externas
+- Trabalhar com ambientes da empresa atual
+
+## ✨ O que você pode fazer
+
+- Autenticar no TunnelHub pelo navegador
+- Listar ambientes disponíveis
+- Listar e inspecionar automações
+- Localizar execuções por intervalo de tempo
+- Resumir uma execução completa
+- Consultar logs e traces de uma execução
+- Ler informações básicas da empresa atual
+
+## 🚀 Comece em 2 minutos
+
+A forma principal de uso é via `npx`:
+
+```bash
+npx @tunnelhub/mcp
+```
+
+Se você estiver desenvolvendo localmente:
+
+```bash
+pnpm install
+pnpm build
+node dist/index.js
+```
+
+## ✅ Pré-requisitos
+
+Você vai precisar de:
+
+- Node.js 22+
+- Acesso a uma empresa do TunnelHub
+- Um cliente compatível com MCP via `stdio`
+
+Clientes recomendados:
+
+- OpenCode
+- Claude Desktop
+- Cursor
+- Outros clientes MCP compatíveis com `stdio`
+
+## ⚙️ Variáveis de ambiente
+
+Variáveis suportadas:
+
+- `OAUTH_CALLBACK_PORT` padrão `3333`
+- `TUNNELHUB_FRONTEND_URL` opcional
+- `TUNNELHUB_API_HOST` opcional; padrão `https://api.tunnelhub.io`
+
+Observações:
+
+- O login usa o fluxo do frontend do TunnelHub
+- Quando possível, o MCP reutiliza o domínio personalizado da empresa
+- A porta do callback OAuth prefere `3333` e procura outra livre se necessário
+
+## 🔌 Configuração oficial por cliente
+
+### OpenCode via CLI
+
+Depois da publicação, a forma recomendada será:
+
+```bash
+opencode mcp add tunnelhub -- npx @tunnelhub/mcp
+```
+
+Para desenvolvimento local:
+
+```bash
+opencode mcp add tunnelhub -- node /caminho/para/mcp/dist/index.js
+```
+
+Depois confirme:
+
+```bash
+opencode mcp list
+```
+
+### OpenCode via `opencode.json`
+
+Exemplo completo:
+
+```json
+{
+  "mcp": {
+    "tunnelhub": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@tunnelhub/mcp"
+      ],
+      "enabled": true,
+      "environment": {
+        "OAUTH_CALLBACK_PORT": "3333"
+      }
+    }
+  }
+}
+```
+
+Exemplo usando build local:
+
+```json
+{
+  "mcp": {
+    "tunnelhub": {
+      "type": "local",
+      "command": [
+        "node",
+        "/caminho/para/mcp/dist/index.js"
+      ],
+      "enabled": true,
+      "environment": {
+        "OAUTH_CALLBACK_PORT": "3333"
+      }
+    }
+  }
+}
+```
+
+### Claude Desktop
+
+Exemplo de configuração no `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "tunnelhub": {
+      "command": "npx",
+      "args": ["@tunnelhub/mcp"],
+      "env": {
+        "OAUTH_CALLBACK_PORT": "3333"
+      }
+    }
+  }
+}
+```
+
+Exemplo usando build local:
+
+```json
+{
+  "mcpServers": {
+    "tunnelhub": {
+      "command": "node",
+      "args": ["/caminho/para/mcp/dist/index.js"],
+      "env": {
+        "OAUTH_CALLBACK_PORT": "3333"
+      }
+    }
+  }
+}
+```
+
+### Cursor
+
+Use o mesmo comando `stdio` do cliente MCP:
+
+```json
+{
+  "mcpServers": {
+    "tunnelhub": {
+      "command": "npx",
+      "args": ["@tunnelhub/mcp"],
+      "env": {
+        "OAUTH_CALLBACK_PORT": "3333"
+      }
+    }
+  }
+}
+```
+
+Exemplo usando build local:
+
+```json
+{
+  "mcpServers": {
+    "tunnelhub": {
+      "command": "node",
+      "args": ["/caminho/para/mcp/dist/index.js"],
+      "env": {
+        "OAUTH_CALLBACK_PORT": "3333"
+      }
+    }
+  }
+}
+```
+
+### Outros clientes MCP compatíveis com `stdio`
+
+Se o cliente aceitar um comando local, use:
+
+```bash
+npx @tunnelhub/mcp
+```
+
+Ou, em desenvolvimento:
+
+```bash
+node /caminho/para/mcp/dist/index.js
+```
+
+## 🔐 Como funciona o login
+
+No primeiro uso, chame a ferramenta de login do MCP.
+
+Fluxo esperado:
+
+1. O cliente chama `login_tunnelhub`
+2. O MCP abre o navegador local
+3. Você faz login no TunnelHub
+4. A sessão fica salva localmente
+5. As próximas ferramentas passam a usar a empresa e o ambiente ativos
+
+Ferramentas básicas de sessão:
+
+- `login_tunnelhub`
+- `current_session_tunnelhub`
+- `list_sessions_tunnelhub`
+- `list_environments_tunnelhub`
+- `switch_environment_tunnelhub`
+- `logout_tunnelhub`
+
+## 💬 Exemplos de perguntas
+
+Você pode pedir coisas como:
+
+- `Qual sessão está ativa?`
+- `Liste os ambientes disponíveis`
+- `Liste as automações ativas`
+- `Ache a execução 9b696080439f no dia 2026-03-13`
+- `Resuma a execução 019ce7f3-2707-740c-8692-9b696080439f`
+- `Me mostre os traces com ERROR dessa execução`
+- `Me mostre os logs dessa execução`
+- `Essa execução teve sucesso degradado?`
+- `Quais dependências externas falharam nessa execução?`
+- `Só usando o MCP, me diga o que precisa ser corrigido nessa automação`
+
+## 🧰 Principais ferramentas disponíveis
+
+### Sessão
+
+- `login_tunnelhub`
+- `current_session_tunnelhub`
+- `list_sessions_tunnelhub`
+- `list_environments_tunnelhub`
+- `switch_environment_tunnelhub`
+- `logout_tunnelhub`
+
+### Empresas
+
+- `list_tenants_tunnelhub`
+- `get_tenant_tunnelhub`
+
+### Automações
+
+- `list_automations_tunnelhub`
+- `get_automation_tunnelhub`
+- `list_automation_deploys_tunnelhub`
+- `get_automation_action_logs_tunnelhub`
+- `execute_automation_tunnelhub`
+
+### Monitoramento
+
+- `list_automation_executions_tunnelhub`
+- `find_execution_tunnelhub`
+- `get_execution_tunnelhub`
+- `summarize_execution_tunnelhub`
+- `get_execution_traces_tunnelhub`
+- `get_execution_logs_tunnelhub`
+
+## 🧭 Dicas de uso
+
+- Ao procurar uma execução, informe sempre a data ou um intervalo de tempo
+- Quando já souber `automationId`, `executionId` e `executionPeriod`, use direto as ferramentas de detalhe
+- Para diagnóstico rápido, prefira `summarize_execution_tunnelhub`
+- Para investigação detalhada, consulte traces e logs em seguida
+
+## ⚠️ Limitações atuais
+
+- O foco atual está em automações e monitoramento
+- Algumas APIs do backend têm comportamentos específicos de filtro e paginação
+- A listagem de execuções depende de intervalo de tempo obrigatório
+
+## 🛠️ Desenvolvimento local
+
+Comandos úteis:
+
+```bash
+pnpm install
+pnpm typecheck
+pnpm build
+pnpm dev
+```
+
+## 🤝 Contribuições
+
+Feedback, sugestões e contribuições são bem-vindos.
+
+Se você estiver evoluindo o MCP internamente, vale sempre validar:
+
+- Experiência de uso no cliente MCP
+- Clareza das respostas textuais
+- Consistência dos filtros
+- Qualidade dos exemplos do README
+
+## 📚 Documentação técnica
+
+Detalhes técnicos, arquitetura e comportamento interno estão documentados em inglês:
+
+- `docs/technical-overview.md`
