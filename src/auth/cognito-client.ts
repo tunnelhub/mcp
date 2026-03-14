@@ -41,7 +41,7 @@ export class CognitoClient {
         expiresIn: response.AuthenticationResult.ExpiresIn!,
       };
     } catch (error) {
-      console.error('Failed to refresh tokens:', error);
+      process.stderr.write(`Failed to refresh tokens: ${String(error)}\n`);
       throw error;
     }
   }

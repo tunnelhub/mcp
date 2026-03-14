@@ -389,9 +389,9 @@ Fluxo recomendado:
 
 1. Garanta que a branch principal esteja pronta para release
 2. Atualize a versão com um dos comandos abaixo:
-   - `pnpm release:patch`
-   - `pnpm release:minor`
-   - `pnpm release:major`
+   - `pnpm release:patch` para correções e ajustes compatíveis
+   - `pnpm release:minor` para novas funcionalidades compatíveis
+   - `pnpm release:major` para mudanças incompatíveis
 3. Envie o commit e a tag:
 
 ```bash
@@ -407,6 +407,24 @@ Quando a tag chegar no GitHub, o workflow de release:
 - cria ou atualiza a GitHub Release com notas automáticas
 
 Para o publish no npm funcionar, configure o pacote no npm com `Trusted Publisher` apontando para `tunnelhub/mcp` e o workflow `release.yml`.
+
+Comandos prontos:
+
+```bash
+# patch
+pnpm release:patch
+git push origin main --follow-tags
+
+# minor
+pnpm release:minor
+git push origin main --follow-tags
+
+# major
+pnpm release:major
+git push origin main --follow-tags
+```
+
+O histórico manual das releases fica em `CHANGELOG.md`.
 
 ## 📚 Documentação técnica
 

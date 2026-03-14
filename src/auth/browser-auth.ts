@@ -4,6 +4,10 @@ import open from 'open';
 import net from 'node:net';
 import type { Server } from 'node:http';
 
+function writeStderr(message: string): void {
+  process.stderr.write(`${message}\n`);
+}
+
 export interface BrowserAuthTokens {
   idToken: string;
   accessToken: string;
@@ -126,13 +130,14 @@ export class BrowserAuthFlow {
 
       const httpServer: Server = this.server.listen(this.port, async () => {
         const localUrl = `http://localhost:${this.port}`;
-        console.log('\nStarting TunnelHub MCP authentication...');
-        console.log(`If browser does not open, visit:\n${localUrl}\n`);
+        writeStderr('');
+        writeStderr('Starting TunnelHub MCP authentication...');
+        writeStderr(`If browser does not open, visit:\n${localUrl}\n`);
 
         try {
           await open(localUrl);
         } catch (error) {
-          console.error('Failed to open browser automatically:', error);
+          writeStderr(`Failed to open browser automatically: ${String(error)}`);
         }
       });
 
@@ -155,7 +160,7 @@ export class BrowserAuthFlow {
 
     for (let port = preferredPort + 1; port <= preferredPort + 20; port += 1) {
       if (await this.isPortFree(port)) {
-        console.log(`OAuth callback port ${preferredPort} busy. Using ${port}.`);
+        writeStderr(`OAuth callback port ${preferredPort} busy. Using ${port}.`);
         return port;
       }
     }

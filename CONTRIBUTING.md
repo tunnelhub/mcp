@@ -80,6 +80,12 @@ pnpm release:patch
 git push origin main --follow-tags
 ```
 
+Version bump commands:
+
+- `pnpm release:patch` for backwards-compatible fixes
+- `pnpm release:minor` for backwards-compatible features
+- `pnpm release:major` for breaking changes
+
 The GitHub Actions workflow then:
 
 - validates the pushed tag against `package.json`
