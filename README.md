@@ -381,6 +381,33 @@ Se você estiver evoluindo o MCP internamente, vale sempre validar:
 - Consistência dos filtros
 - Qualidade dos exemplos do README
 
+## 📦 Releases
+
+O repositório publica GitHub Releases e o pacote no npm a partir de tags no formato `vX.Y.Z`.
+
+Fluxo recomendado:
+
+1. Garanta que a branch principal esteja pronta para release
+2. Atualize a versão com um dos comandos abaixo:
+   - `pnpm release:patch`
+   - `pnpm release:minor`
+   - `pnpm release:major`
+3. Envie o commit e a tag:
+
+```bash
+git push origin main --follow-tags
+```
+
+Quando a tag chegar no GitHub, o workflow de release:
+
+- valida se a tag bate com a versão do `package.json`
+- roda `pnpm check`
+- gera o tarball com `npm pack`
+- publica no npm via Trusted Publishing (OIDC)
+- cria ou atualiza a GitHub Release com notas automáticas
+
+Para o publish no npm funcionar, configure o pacote no npm com `Trusted Publisher` apontando para `tunnelhub/mcp` e o workflow `release.yml`.
+
 ## 📚 Documentação técnica
 
 Detalhes técnicos, arquitetura e comportamento interno estão documentados em inglês:

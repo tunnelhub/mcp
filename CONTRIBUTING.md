@@ -68,3 +68,22 @@ Package publication is validated with:
 pnpm pack:check
 pnpm publish:dry-run
 ```
+
+## Release process
+
+Releases are created from git tags in the format `vX.Y.Z`.
+
+Typical flow:
+
+```bash
+pnpm release:patch
+git push origin main --follow-tags
+```
+
+The GitHub Actions workflow then:
+
+- validates the pushed tag against `package.json`
+- runs `pnpm check`
+- creates the package tarball with `npm pack`
+- publishes to npm using trusted publishing with GitHub Actions OIDC
+- creates or updates the matching GitHub Release
