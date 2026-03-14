@@ -1,6 +1,6 @@
 # TunnelHub MCP
 
-Conecte clientes MCP ao TunnelHub para investigar automações, execuções, logs, traces, API Gateway, sistemas e pacotes usando o mesmo fluxo de autenticação do frontend.
+Conecte clientes MCP ao TunnelHub para investigar automações, execuções, logs, traces, estatísticas de uso, API Gateway, sistemas e pacotes usando o mesmo fluxo de autenticação do frontend.
 
 Este MCP é especialmente útil para:
 
@@ -19,6 +19,7 @@ Este MCP é especialmente útil para:
 - Consultar pacotes do ambiente atual
 - Consultar tabelas de de/para do ambiente atual
 - Consultar APIs, clients, usage plans, API keys e logs do API Gateway
+- Consultar estatísticas de uso e consumo da empresa atual
 - Localizar execuções por intervalo de tempo
 - Resumir uma execução completa
 - Consultar logs e traces de uma execução
@@ -241,6 +242,10 @@ Você pode pedir coisas como:
 - `Liste os logs da API 123abc`
 - `Mostre o log 9988 da API 123abc no timestamp 1710345600`
 - `Liste os logs globais do API Gateway no dia 2026-03-13`
+- `Mostre as estatísticas da home deste mês`
+- `Mostre as estatísticas da home de 2026-03-01 até 2026-03-31`
+- `Mostre o consumo de execuções do tenant neste mês`
+- `Mostre recargas e consumo do tenant para 2026-03-01`
 - `Liste as tabelas de de/para do ambiente atual`
 - `Busque a tabela de de/para CFOP`
 - `Liste os itens da tabela de de/para 1234`
@@ -316,6 +321,11 @@ Você pode pedir coisas como:
 - `get_execution_traces_tunnelhub`
 - `get_execution_logs_tunnelhub`
 
+### Estatísticas
+
+- `get_home_statistics_tunnelhub`
+- `get_tenant_execution_statistics_tunnelhub`
+
 ## ⚙️ Variáveis de ambiente
 
 Variáveis suportadas:
@@ -346,6 +356,8 @@ Observações:
 - API keys e logs podem incluir dados sensíveis retornados pelo backend
 - Algumas APIs do backend têm comportamentos específicos de filtro e paginação
 - A listagem de execuções depende de intervalo de tempo obrigatório
+- Estatísticas de consumo do tenant são somente leitura
+- Em `get_tenant_execution_statistics_tunnelhub`, o backend resolve o período principalmente por `startDate`
 
 ## 🛠️ Desenvolvimento local
 

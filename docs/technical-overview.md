@@ -7,6 +7,7 @@
 - session management
 - environments
 - API Gateway
+- usage statistics
 - systems
 - packages
 - conversion tables (`dataStores`)
@@ -87,6 +88,21 @@ The API client maps tools to public backend services:
 - `/platform-service`
 - `/integrations-service`
 - `/api-gateway-service`
+
+### Usage statistics
+
+The MCP exposes read-only tenant usage statistics backed by `integrations-service`.
+
+Relevant endpoints:
+
+- `GET /integrations-service/homeStatistics`
+- `GET /integrations-service/automations/statistics`
+
+Practical notes:
+
+- `homeStatistics` uses the current environment and supports optional `startDate` and `endDate`
+- `automations/statistics` supports optional `startDate` and `endDate`, but backend period resolution is effectively driven by `startDate`
+- tenant execution statistics return both current plan consumption and recharge history
 
 ### API Gateway
 
@@ -318,6 +334,11 @@ the text response is intentionally rich because many MCP agents reason better fr
 - `get_execution_traces_tunnelhub`
 - `get_execution_logs_tunnelhub`
 
+### Statistics
+
+- `get_home_statistics_tunnelhub`
+- `get_tenant_execution_statistics_tunnelhub`
+
 ## Local Development
 
 Install and build:
@@ -358,8 +379,10 @@ npx -y @tunnelhub/mcp@latest
 - current feature depth is strongest in automations and monitoring
 - API Gateway access is read-only for now
 - API key and log responses may contain sensitive backend data
+- usage statistics are read-only for now
 - systems and packages are read-only for now
 - execution listing still depends on explicit date ranges
+- tenant execution statistics month selection depends mainly on `startDate`
 - some backend APIs use Ant Table semantics, so request normalization is required in the MCP layer
 - platform coverage is not complete yet for every TunnelHub domain
 
@@ -409,3 +432,4 @@ Check:
 - `src/tools/data-stores/index.ts`
 - `src/tools/automations/index.ts`
 - `src/tools/monitoring/index.ts`
+- `src/tools/statistics/index.ts`

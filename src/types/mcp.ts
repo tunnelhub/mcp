@@ -181,6 +181,15 @@ export const DataStoreItemIdParamsSchema = DataStoreIdParamsSchema.extend({
   itemId: z.string().min(1),
 }).strict();
 
+export const StatisticsDateRangeParamsSchema = z.object({
+  startDate: z.string().min(1).optional().describe('Start date. Example: 2026-03-01'),
+  endDate: z.string().min(1).optional().describe('End date. Example: 2026-03-31'),
+}).strict();
+
+export const HomeStatisticsParamsSchema = StatisticsDateRangeParamsSchema;
+
+export const TenantExecutionStatisticsParamsSchema = StatisticsDateRangeParamsSchema;
+
 export const AutomationIdParamsSchema = z.object({
   automationId: z.string().min(1),
 }).strict();

@@ -7,6 +7,7 @@ import { registerAutomationTools } from './tools/automations/index.js';
 import { registerMonitoringTools } from './tools/monitoring/index.js';
 import { registerPackageTools } from './tools/packages/index.js';
 import { registerSessionTools } from './tools/session/index.js';
+import { registerStatisticsTools } from './tools/statistics/index.js';
 import { registerSystemTools } from './tools/systems/index.js';
 import { registerTenantTools } from './tools/tenants/index.js';
 import { ApiClient } from './utils/api-client.js';
@@ -53,6 +54,7 @@ export class TunnelHubMCPServer {
     registerDataStoreTools(this.server, context);
     registerAutomationTools(this.server, context);
     registerMonitoringTools(this.server, context);
+    registerStatisticsTools(this.server, context);
   }
 
   getServer(): McpServer {

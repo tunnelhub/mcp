@@ -2,12 +2,14 @@ import axios, { type AxiosInstance } from 'axios';
 import type {
   ApiGateway,
   ApiGatewayLog,
+  HomeStatisticsResponse,
   Automation,
   AutomationDeploy,
   AutomationExecution,
   AutomationExecutionDetailsResponse,
   AutomationExecutionLogsResponse,
   AutomationTraceResponse,
+  TenantExecutionStatisticsResponse,
   AuthClient,
   CurrentUser,
   DataStore,
@@ -46,6 +48,11 @@ interface ApiGatewayLogDateRangeParams {
   httpMethod?: string;
   resource?: string;
   status?: string;
+}
+
+interface StatisticsDateRangeParams {
+  startDate?: string;
+  endDate?: string;
 }
 
 export class ApiClient {
@@ -190,6 +197,18 @@ export class ApiClient {
   async listAllApiGatewayLogs(params: ApiGatewayLogDateRangeParams): Promise<unknown> {
     const normalizedParams = this.buildApiGatewayLogRangeParams(params);
     return this.request('GET', '/api-gateway-service/apiGateways/all/logs', normalizedParams, this.getMonitoringHeaders());
+  }
+
+  async getHomeStatistics(params?: StatisticsDateRangeParams): Promise<HomeStatisticsResponse> {
+    return this.request<HomeStatisticsResponse>('GET', '/integrations-service/homeStatistics', this.buildStatisticsDateRangeParams(params));
+  }
+
+  async getTenantExecutionStatistics(params?: StatisticsDateRangeParams): Promise<TenantExecutionStatisticsResponse> {
+    return this.request<TenantExecutionStatisticsResponse>(
+      'GET',
+      '/integrations-service/automations/statistics',
+      this.buildStatisticsDateRangeParams(params),
+    );
   }
 
   async listAutomations(params?: QueryParams): Promise<unknown> {
@@ -538,6 +557,17 @@ export class ApiClient {
       hideEmptySuccess: params.hideEmptySuccess ?? true,
       sorter: { createdAt: 'descending' },
       filter,
+    };
+  }
+
+  private buildStatisticsDateRangeParams(params?: StatisticsDateRangeParams): QueryParams | undefined {
+    if (!params) {
+      return undefined;
+    }
+
+    return {
+      startDate: params.startDate,
+      endDate: params.endDate,
     };
   }
 

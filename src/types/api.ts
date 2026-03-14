@@ -228,6 +228,72 @@ export interface ApiGatewayLog {
   [key: string]: unknown;
 }
 
+export interface HomeStatisticsByPeriod {
+  exec_period: string;
+  total_executions: number;
+  total_processed_items: number;
+  total_fail: number;
+  total_success: number;
+  total_neutral: number;
+}
+
+export interface HomeStatisticsByDay {
+  exec_date: string;
+  total_executions: number;
+  total_processed_items: number;
+  total_fail: number;
+  total_success: number;
+  total_neutral: number;
+}
+
+export interface HomeStatisticsByIntegration {
+  integration_name: string;
+  total_executions: number;
+  total_processed_items: number;
+  total_fail: number;
+  total_success: number;
+  total_neutral: number;
+}
+
+export interface HomeStatisticsData {
+  resumeByPeriod: HomeStatisticsByPeriod[];
+  resumeByDay: HomeStatisticsByDay[];
+  resumeByIntegration: HomeStatisticsByIntegration[];
+}
+
+export interface HomeStatisticsResponse {
+  data: HomeStatisticsData;
+}
+
+export interface AutomationTenantStatistics {
+  executedTimeInSeconds?: {
+    total?: number;
+    byEnvironment?: Record<string, number>;
+    byAutomation?: Record<string, number>;
+  };
+  [key: string]: unknown;
+}
+
+export interface AutomationRecharge {
+  uuid: string;
+  secondsRecharged: number;
+  secondsUsed: number;
+  currency?: string;
+  amout?: number;
+  createdAt?: string;
+  [key: string]: unknown;
+}
+
+export interface TenantExecutionStatisticsResponse {
+  stats: {
+    secondsIncluded: number;
+    tenantTier: string;
+    statistics?: AutomationTenantStatistics;
+    [key: string]: unknown;
+  };
+  recharges: AutomationRecharge[];
+}
+
 export interface Automation {
   uuid: string;
   name?: string;
